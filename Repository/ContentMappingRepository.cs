@@ -1,14 +1,13 @@
+using CmsLocalization.DB;
+using CmsLocalization.Infastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using CmsLocalization.DB;
-using CmsLocalization.Infastructure;
-using Microsoft.EntityFrameworkCore;
 
 namespace CmsLocalization.Repository
 {
-public class ContentMappingRepository : IContentMappingRepository
+    public class ContentMappingRepository : IContentMappingRepository
     {
         private readonly CMS_Context _context;
 
@@ -54,9 +53,10 @@ public class ContentMappingRepository : IContentMappingRepository
         {
             Save();
         }
+
         public void Delete(ContentMapping entity)
         {
-            var contentMapping = _context.ContentMappings.Where(c => c.Id == entity.Id);       
+            var contentMapping = _context.ContentMappings.Where(c => c.Id == entity.Id);
             Delete(entity);
         }
 

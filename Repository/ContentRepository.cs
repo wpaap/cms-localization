@@ -1,14 +1,14 @@
+using CmsLocalization.DB;
+using CmsLocalization.Infastructure;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using CmsLocalization.DB;
-using CmsLocalization.Infastructure;
-using Microsoft.EntityFrameworkCore;
 
 namespace CmsLocalization.Repository
 {
-public class ContentRepository : IContentRepository
+    public class ContentRepository : IContentRepository
     {
         private readonly IContentMappingRepository _contentMappingRepository;
 
@@ -63,6 +63,7 @@ public class ContentRepository : IContentRepository
         {
             Save();
         }
+
         public void Delete(Content entity)
         {
             _context.Remove(entity);

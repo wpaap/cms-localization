@@ -6,7 +6,6 @@ using CmsLocalization.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,13 +29,13 @@ namespace CmsLocalization
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            #region Dependency Injections 
+            #region Dependency Injections
 
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<IContentRepository, ContentRepository>();
             services.AddScoped<IContentMappingRepository, ContentMappingRepository>();
 
-            #endregion
+            #endregion Dependency Injections
 
             #region AutoMapperConfiguration
 
@@ -50,7 +49,7 @@ namespace CmsLocalization
                 cfg.CreateMap<Content, ContentModel>()
                 .ForMember(dest => dest.Languages, mo => mo.Ignore());
 
-                #endregion
+                #endregion Content
 
                 #region ContentMapping
 
@@ -59,7 +58,7 @@ namespace CmsLocalization
                 .ForMember(dest => dest.Language, mo => mo.Ignore());
                 cfg.CreateMap<ContentMapping, ContentMappingModel>();
 
-                #endregion
+                #endregion ContentMapping
 
                 #region Language
 
@@ -69,16 +68,16 @@ namespace CmsLocalization
                 .ForMember(dest => dest.CreatedBy, mo => mo.Ignore())
                 .ForMember(dest => dest.CreatedTime, mo => mo.Ignore());
 
-                #endregion
+                #endregion Language
             });
 
             IMapper mapper = config.CreateMapper();
             services.AddSingleton(mapper);
 
-            #endregion
+            #endregion AutoMapperConfiguration
 
             services.AddDbContext<CMS_Context>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options => options.EnableEndpointRouting = false);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
